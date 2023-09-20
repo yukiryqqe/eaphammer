@@ -1,49 +1,48 @@
-from . import utils
 import os
 import time
+from . import utils
 
-class Interface(object):
-
+class Interface:
     def __init__(self, interface):
         self.interface = interface
 
     def up(self):
-        print('[*] Bringing %s up...' % self.interface)
-        os.system('ip link set %s up' % self.interface)
+        print(f'[*] Bringing {self.interface} up...')
+        os.system(f'ip link set {self.interface} up')
         print('[*] Complete!')
-        time.sleep(.5)
+        time.sleep(0.5)
 
     def down(self):
-        print('[*] Bringing %s down...' % self.interface)
-        os.system('ip link set %s down' % self.interface)
+        print(f'[*] Bringing {self.interface} down...')
+        os.system(f'ip link set {self.interface} down')
         print('[*] Complete!')
-        time.sleep(.5)
+        time.sleep(0.5)
 
     def mode_monitor(self):
-        print('[*] Placing %s into monitor mode...' % self.interface)
-        os.system('iw dev %s set type monitor' % self.interface)
+        print(f'[*] Placing {self.interface} into monitor mode...')
+        os.system(f'iw dev {self.interface} set type monitor')
         print('[*] Complete!')
-        time.sleep(.5)
+        time.sleep(0.5)
 
     def mode_managed(self):
-        print('[*] Placing %s into managed mode...' % self.interface)
-        os.system('iw dev %s set type managed' % self.interface)
+        print(f'[*] Placing {self.interface} into managed mode...')
+        os.system(f'iw dev {self.interface} set type managed')
         print('[*] Complete!')
-        time.sleep(.5)
+        time.sleep(0.5)
 
     def nm_off(self):
         print('[*] Reticulating radio frequency splines...')
-        os.system('nmcli device set %s managed no' % self.interface)
-        utils.sleep_bar(1, '[*] Using nmcli to tell NetworkManager not to manage %s...' % self.interface)
-        print('[*] Success: %s no longer controlled by NetworkManager.' % self.interface)
+        os.system(f'nmcli device set {self.interface} managed no')
+        utils.sleep_bar(1, f'[*] Using nmcli to tell NetworkManager not to manage {self.interface}...')
+        print(f'[*] Success: {self.interface} no longer controlled by NetworkManager.')
 
     def nm_on(self):
-        os.system('nmcli device set %s managed yes' % self.interface)
-        utils.sleep_bar(1, '[*] Using nmcli to give NetworkManager control of %s...' % self.interface)
-        print('[*] Success: %s is now managed by NetworkManager.' % self.interface)
+        os.system(f'nmcli device set {self.interface} managed yes')
+        utils.sleep_bar(1, f'[*] Using nmcli to give NetworkManager control of {self.interface}...')
+        print(f'[*] Success: {self.interface} is now managed by NetworkManager.')
 
     def set_ip_and_netmask(self, ip, netmask):
-        os.system('ifconfig %s %s netmask %s' % (self.interface, ip, netmask))
+        os.system(f'ifconfig {self.interface} {ip} netmask {netmask}')
 
     def __str__(self):
         return self.interface
